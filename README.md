@@ -14,7 +14,7 @@ Yii2 ace Admin 后台模板
 1. 执行 composer 安装项目
         
     ```
-    php composer create-project liujx/yii2-app-advanced
+    php composer create-project isuben/yii2-ace-admin
     ```
 
 2. 执行该目录下的 init 初始化配置（生成本地配置文件）

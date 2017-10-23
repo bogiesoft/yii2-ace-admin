@@ -26,7 +26,7 @@ class JqGrid extends  Strategy
         $intStart = ($intPage - 1) * $intRows;
 
         // 处理排序信息
-        $sort = $sort == 'asc' ? SORT_ASC : SORT_DESC;
+        //$sort = $sort == 'asc' ? SORT_ASC : SORT_DESC;
 
         // 返回查询字段信息
         $this->arrRequest = [
@@ -37,7 +37,6 @@ class JqGrid extends  Strategy
             'page' => $intPage, // 第几页
             'params' => $params, // 查询参数
         ];
-
         return $this->arrRequest;
     }
 

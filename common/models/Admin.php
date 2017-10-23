@@ -9,7 +9,7 @@ use yii\web\IdentityInterface;
 use common\behaviors\UpdateBehavior;
 
 /**
- * User model
+ * Admin model
  *
  * @property integer $id
  * @property string $username

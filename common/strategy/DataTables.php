@@ -15,7 +15,6 @@ class DataTables extends Strategy
     public function getRequest()
     {
         $request = \Yii::$app->request;
-
         // 接收参数
         $params = $request->post('params');  // 查询参数
         $intStart   = (int)$request->post('iDisplayStart',  0);   // 开始位置

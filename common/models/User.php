@@ -82,7 +82,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['email' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -187,5 +187,59 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * 获取用户和组之间的关系
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserGroups()
+    {
+        return $this->hasMany(UserGroup::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * 获取用户的组
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroups()
+    {
+        return $this->hasMany(Group::className(), ['id' => 'group_id'])->via('userGroups');
+    }
+
+    /**
+     * 获取组和菜单之间的关系
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroupMenus()
+    {
+        return $this->hasMany(GroupPlateMenu::className(),['group_id'=>'id'])->via('groups');
+    }
+
+    /**
+     * 获取用户的菜单列表
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMenus()
+    {
+        return $this->hasMany(PlateMenu::className(),['id'=>'plate_menu_id'])->via('groupMenus');
+    }
+
+    /**
+     * 获取组和权限的关系
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroupPermissions()
+    {
+        return $this->hasMany(GroupPermission::className(),['group_id'=>'id'])->via('groups');
+    }
+
+    /**
+     * 获取用户的权限列表
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPermissions()
+    {
+        return $this->hasMany(Permission::className(),['id'=>'permission_id'])->via('groupPermissions');
     }
 }

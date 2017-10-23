@@ -10,7 +10,7 @@ class AdminForm extends \yii\base\Model
     public $username;
     public $password;
     public $rememberMe = true;
-
+    /** @var Admin  $_user*/
     private $_user = false;
 
     /**
@@ -73,8 +73,7 @@ class AdminForm extends \yii\base\Model
 
     /**
      * Finds user by [[username]]
-     *
-     * @return User|null
+     * @return Admin|null|static
      */
     public function getUser()
     {

@@ -142,7 +142,6 @@ class Controller extends \common\controllers\UserController
         // 实例化数据显示类
         /* @var $strategy \common\strategy\Strategy */
         $strategy = Substance::getInstance($this->strategy);
-
         // 获取查询参数
         $search = $strategy->getRequest(); // 处理查询参数
         $search['field'] = $search['field'] ? $search['field'] : $this->sort;
@@ -151,7 +150,6 @@ class Controller extends \common\controllers\UserController
 
         // 查询数据
         $query = $this->getQuery($search['where']);
-        if (YII_DEBUG) $this->arrJson['other'] = $query->createCommand()->getRawSql();
 
         // 查询数据条数
         $total = $query->count();
@@ -161,7 +159,7 @@ class Controller extends \common\controllers\UserController
         } else {
             $array = [];
         }
-
+        if (YII_DEBUG) $this->arrJson['other'] = $query->createCommand()->getRawSql();
         // 处理返回数据
         $this->handleJson($strategy->handleResponse($array, $total));
 

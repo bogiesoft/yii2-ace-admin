@@ -1424,7 +1424,7 @@
                 "bServerSide": true,		 	// 是否开启从服务器端获取数据
                 "bRetrieve": true,
                 "bDestroy": true,
-                // "processing": true,		    // 是否使用加载进度条
+                 "processing": true,		    // 是否使用加载进度条
                 // "searching": false,
                 "sPaginationType":  "full_numbers"     // 分页样式
                 // "order": [[1, "desc"]]       // 默认排序，

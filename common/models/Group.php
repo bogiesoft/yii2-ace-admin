@@ -93,4 +93,5 @@ class Group extends \yii\db\ActiveRecord
 
         return $array;
     }
+
 }

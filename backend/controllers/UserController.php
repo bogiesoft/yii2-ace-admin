@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\models\Menu;
+use common\models\Group;
 use Yii;
 use backend\models\User;
 use common\models\User as Member;
@@ -103,11 +105,56 @@ class UserController extends Controller
             $userGroups = $model->getUserGroups();
             $userGroupRelations = $model->getUserGroups()->all();
         }
+
+        /** @var \common\models\User $userObj */
+        $userObj = User::find()
+            ->where(['username'=>$username])
+            ->one();
+        $groups = $userObj->getGroups()->all();
+        $menus = [];
+        foreach ($groups as $model){
+            $menus[$model->group_name] = $model->group_name . ' (' . $model->desc . ')';
+        }
+        $arrHaves = array_keys($menus);
+
+        $trees = [];
+        if ($menus) {
+            // 获取一级目录
+            foreach ($menus as $value) {
+                // 初始化的判断数据
+                $id = $value['pid'] == 0 ? $value['id'] : $value['pid'];
+                $array = [
+                    'text' => $value['menu_name'],
+                    'id' => $value['id'],
+                    'data' => $value['url'],
+                    'state' => [],
+                ];
+
+                // 默认选中
+                $array['state']['selected'] = in_array($value['url'], $arrHaves);
+                if (!isset($trees[$id])) {
+                    $trees[$id] = ['children' => []];
+                }
+
+                // 判断添加数据
+                if ($value['pid'] == 0) {
+                    $array['icon'] = 'menu-icon fa fa-list orange';
+                    $trees[$id] = array_merge($trees[$id], $array);
+                } else {
+                    $array['icon'] = false;
+                    $trees[$id]['children'][] = $array;
+                }
+            }
+        }
+
+        // 导航信息
+        $trees = array_values($trees);
         // 加载视图返回
         return $this->render('edit', [
             'model'=>$model,
             'models' => $userGroups,// 模型对象
             'relation'=>$userGroupRelations,
+            'trees'=>$trees,
         ]);
     }
 }

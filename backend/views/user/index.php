@@ -21,8 +21,8 @@ $this->title = '用户信息';
                 buttons: {
                     "see": {"cClass": "user-see"},
                     "other": {
-                        "title": "编辑组别",
-                        "button-title": "编辑组别",
+                        "title": "编辑",
+                        "button-title": "编辑",
                         "className": "btn-warning",
                         "cClass": "user-edit",
                         "icon": "fa-pencil-square-o",
@@ -146,7 +146,7 @@ $this->title = '用户信息';
             var data = m.table.data()[$(this).attr('table-data')];
             if (data) {
                 layerOpen(
-                    "查看" + data["name"] + "(" + data["description"] + ") 详情",
+                    "查看" + data["username"] + "(id为" + data["username"] + ") 详情",
                     "<?=Url::toRoute(['user/view'])?>?name=" + data['username']
                 );
             }
@@ -157,7 +157,7 @@ $this->title = '用户信息';
             var data = m.table.data()[$(this).attr('table-data')];
             if (data) {
                 layerOpen(
-                    "编辑" + data["name"] + "(" + data["description"] + ") 信息",
+                    "编辑" + data["username"] + "(id为" + data["id"] + ") 信息",
                     "<?=Url::toRoute(['user/edit'])?>?username=" + data['username']
                 );
             }

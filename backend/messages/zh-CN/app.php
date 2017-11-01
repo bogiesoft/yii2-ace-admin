@@ -22,5 +22,8 @@ return [
     'Create' => '创建',
     'Save'   => '保存',
     'Update' => '更新',
-    'Group'=>'用户组更新'
+    'Group'=>'用户组更新',
+    'Groups'=>'组别',
+    'username'=>'用户名',
+    'Permissions'=>'权限'
 ];

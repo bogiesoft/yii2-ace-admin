@@ -159,7 +159,7 @@ $this->registerCssFile('@web/public/assets/js/jstree/default/style.css', $depend
                 })
             }
 
-            var i, j, str;
+            var i, j;
             for(i = 0, j = data.selected.length; i < j; i++) {
                 str = data.instance.get_node(data.selected[i]).data;
                 console.info(str);

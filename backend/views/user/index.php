@@ -44,15 +44,16 @@ $this->title = '用户信息';
                         "title": "用户账号",
                         "data": "username",
                         "sName": "username",
-                        "isHide": true,
-                        "edit": {"type": "hidden"},
+                        "isHide": false,
+                        "edit": {"type": "text", "required": true, "rangelength": "[2, 64]"},
                         "search": {"type": "text"}
                     },
                     {
                         "title": "角色名称",
                         "data": "username",
+                        "isHide": true,
                         "sName": "newName",
-                        "edit": {"type": "text", "required": true, "rangelength": "[2, 64]"},
+                        "edit": {"type": "hidden"},
                         "bSortable": false
                     },
                     {
@@ -158,7 +159,7 @@ $this->title = '用户信息';
             if (data) {
                 layerOpen(
                     "编辑" + data["username"] + "(id为" + data["id"] + ") 信息",
-                    "<?=Url::toRoute(['user/edit'])?>?username=" + data['username']
+                    "<?=Url::toRoute(['user/edit'])?>?name=" + data['username']
                 );
             }
         })

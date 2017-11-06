@@ -174,12 +174,12 @@ class Menu extends AdminModel
     public static function getMenusByPermissions($permissions)
     {
         $menus = [];
-        $child = self::find()->where([
-            'url' => array_keys($permissions),
-            'status' => self::STATUS_ACTIVE
-        ])->orderBy([
-            'sort' => SORT_ASC
-        ])
+        $child = self::find()
+            ->where([
+                'url' => array_keys($permissions),
+                'status' => self::STATUS_ACTIVE
+            ])
+            ->orderBy(['sort' => SORT_ASC])
             ->asArray()
             ->indexBy('id')
             ->all();

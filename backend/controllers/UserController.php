@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use backend\models\Menu;
 use common\models\Group;
 use Yii;
 use backend\models\User;
@@ -60,15 +59,13 @@ class UserController extends Controller
         return $array;
     }
 
-    public function actionEdit($username)
+    public function actionEdit($name)
     {
-        $model = Member::findByUsername($username);  // 查询对象
-
+        $model = Member::findByUsername($name);  // 查询对象
         // 添加权限
         $request = Yii::$app->request;       // 请求信息
         $array = $request->post();// 请求参数信息
-        $userGroups = $model->getGroups()->all();
-        $userGroupRelations = $model->getUserGroups()->all();
+        $userGroups = $model->getGroups()->orderBy('order')->asArray()->all();
 
         if(!empty($array)){
             $arr = [];
@@ -101,60 +98,63 @@ class UserController extends Controller
             } catch (Exception $e) {
                 $trans->rollBack();
             }
-
-            $userGroups = $model->getUserGroups();
-            $userGroupRelations = $model->getUserGroups()->all();
+            $userGroups = $model->getGroups()->orderBy('order')->asArray()->all();
         }
 
-        /** @var \common\models\User $userObj */
-        $userObj = User::find()
-            ->where(['username'=>$username])
-            ->one();
-        $groups = $userObj->getGroups()->all();
-        $menus = [];
-        foreach ($groups as $model){
-            $menus[$model->group_name] = $model->group_name . ' (' . $model->desc . ')';
-        }
-        $arrHaves = array_keys($menus);
+        $groups = Group::find()->orderBy('order')->asArray()->all();
 
         $trees = [];
-        if ($menus) {
+        if ($groups) {
             // 获取一级目录
-            foreach ($menus as $value) {
+            foreach ($groups as $group) {
                 // 初始化的判断数据
-                $id = $value['pid'] == 0 ? $value['id'] : $value['pid'];
+                $id = ($group['pid'] == 0 || $group['pid'] == '') ? $group['id'] : $group['pid'];
                 $array = [
-                    'text' => $value['menu_name'],
-                    'id' => $value['id'],
-                    'data' => $value['url'],
+                    'text' => $group['group_name'],
+                    'id' => $group['id'],
+                    'data' => $group['group_name'],
                     'state' => [],
                 ];
 
                 // 默认选中
-                $array['state']['selected'] = in_array($value['url'], $arrHaves);
+                $array['state']['selected'] = true;
                 if (!isset($trees[$id])) {
                     $trees[$id] = ['children' => []];
                 }
 
                 // 判断添加数据
-                if ($value['pid'] == 0) {
-                    $array['icon'] = 'menu-icon fa fa-list orange';
+                if ($group['pid'] == 0) {
                     $trees[$id] = array_merge($trees[$id], $array);
                 } else {
-                    $array['icon'] = false;
                     $trees[$id]['children'][] = $array;
                 }
             }
         }
+        $temp = [];
+        foreach ($trees as $tree){
+            $temp[] = $tree;
+        }
+        $trees = $temp;
 
-        // 导航信息
-        $trees = array_values($trees);
-        // 加载视图返回
+
         return $this->render('edit', [
             'model'=>$model,
-            'models' => $userGroups,// 模型对象
-            'relation'=>$userGroupRelations,
+            'models' => $userGroups,
             'trees'=>$trees,
         ]);
+    }
+
+    public function actionView($name)
+    {
+        // 查询角色信息
+        /* @var $model \backend\models\User */
+        $model = Member::findByUsername($name);
+
+        $userGroups = $model->getGroups()->orderBy('order')->asArray()->all();
+
+        $userPlates = $model->getPlates()->asArray()->all();
+
+        $userMenus = $model->getMenus()->asArray()->all();
+
     }
 }

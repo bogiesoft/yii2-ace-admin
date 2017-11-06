@@ -242,4 +242,15 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Permission::className(),['id'=>'permission_id'])->via('groupPermissions');
     }
+
+    /**
+     * 获取用户的平台列表
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPlates()
+    {
+        return $this->hasMany(Permission::className(),['id'=>'permission_id'])
+            ->via('groupsPermissions')
+            ->groupBy('id');
+    }
 }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-10-23 18:16:43
+Date: 2017-11-06 18:46:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,8 +46,8 @@ CREATE TABLE `yii2_admin` (
 -- Records of yii2_admin
 -- ----------------------------
 INSERT INTO `yii2_admin` VALUES ('1', 'super', 'super@admin.com', '', 'administrator', '10', 'gKkLFMdB2pvIXOFNpF_Aeemvdf1j0YUM', '$2y$10$XfmOZIsfz4satTeacHgn5u1rR2THtBjnSKeRJLJbM.wRun0F7IW0K', '5vLaPpUS-I-XxJaoGP-GZDk474WdnaK3_1469073015', '1508741825', '127.0.0.1', '湖南省,岳阳市,岳阳县', '1501996501', '1', '1508741825', '1');
-INSERT INTO `yii2_admin` VALUES ('2', 'admin', 'admin@admin.com', '', 'admin', '10', '1GVE-wHn-oyBGBka89QgzRyU2ajT1ftW', '$2y$10$XfmOZIsfz4satTeacHgn5u1rR2THtBjnSKeRJLJbM.wRun0F7IW0K', 'CgScbf1E96N3pqH01b0mVi_Z58j8QsRV_1501916190', '1508488680', '127.0.0.1', '湖南省,岳阳市,岳阳县', '1501996501', '1', '1508488680', '2');
-INSERT INTO `yii2_admin` VALUES ('3', 'test', 'test@qq.com', '', 'admin', '10', 's-8-AU1yCz9Uvq32ktqGCm_WOi2c0e_c', '$2y$13$kERARmZxrLDCL.qaFOYXmuncMijyQ4ZZfBCZmVfnN1n1bzN03PzlC', 'GVgglauR1P7CqiEbBEuO-SgwgUNAVM-4_1508479034', '1508488634', '127.0.0.1', '', '1508479034', '1', '1508488634', '3');
+INSERT INTO `yii2_admin` VALUES ('2', 'admin', 'admin@admin.com', '', 'admin', '10', '1GVE-wHn-oyBGBka89QgzRyU2ajT1ftW', '$2y$10$XfmOZIsfz4satTeacHgn5u1rR2THtBjnSKeRJLJbM.wRun0F7IW0K', 'CgScbf1E96N3pqH01b0mVi_Z58j8QsRV_1501916190', '1509964693', '127.0.0.1', '湖南省,岳阳市,岳阳县', '1501996501', '1', '1509964693', '2');
+INSERT INTO `yii2_admin` VALUES ('3', 'test', 'test@qq.com', '', 'admin', '10', 's-8-AU1yCz9Uvq32ktqGCm_WOi2c0e_c', '$2y$13$kERARmZxrLDCL.qaFOYXmuncMijyQ4ZZfBCZmVfnN1n1bzN03PzlC', 'GVgglauR1P7CqiEbBEuO-SgwgUNAVM-4_1508479034', '1509963151', '127.0.0.1', '', '1508479034', '1', '1509963151', '3');
 
 -- ----------------------------
 -- Table structure for yii2_admin_log
@@ -65,7 +65,7 @@ CREATE TABLE `yii2_admin_log` (
   `created_id` int(11) NOT NULL DEFAULT '0' COMMENT '创建用户',
   PRIMARY KEY (`id`),
   KEY `admin_id` (`created_id`) USING BTREE COMMENT '管理员'
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='管理员信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='管理员信息表';
 
 -- ----------------------------
 -- Records of yii2_admin_log
@@ -106,6 +106,10 @@ INSERT INTO `yii2_admin_log` VALUES ('33', '2', 'menu', 'update', '/menu/update'
 INSERT INTO `yii2_admin_log` VALUES ('34', '2', 'menu', 'update', '/menu/update', 'id=11', '{\"id\":\"11\",\"pid\":\"18\",\"menu_name\":\"子系统用户\",\"icons\":\"menu-icon fa fa-user\",\"url\":\"user/index\",\"status\":\"1\",\"sort\":\"3\"}', '1508724395', '1');
 INSERT INTO `yii2_admin_log` VALUES ('35', '2', 'user', 'update', '/user/update', 'id=1', '{\"id\":\"1\",\"username\":\"user_id_1\",\"newName\":\"user_id_1\",\"password\":\"123456\",\"repassword\":\"123456\",\"email\":\"user_1@qq.com\",\"status\":\"10\"}', '1508741585', '1');
 INSERT INTO `yii2_admin_log` VALUES ('36', '1', 'authority', 'create', '/authority/create', 'name=', '{\"type\":\"2\",\"name\":\"\",\"newName\":\"user/edit\",\"description\":\"用户组别修改\",\"rule_name\":\"\"}', '1508741642', '1');
+INSERT INTO `yii2_admin_log` VALUES ('37', '2', 'china', 'update', '/china/update', 'id=110000', '{\"id\":\"110000\",\"name\":\"北京市\",\"pid\":\"0\",\"oper\":\"edit\"}', '1509932570', '2');
+INSERT INTO `yii2_admin_log` VALUES ('38', '1', 'user', 'create', '/user/create', 'id=2', '{\"id\":\"\",\"username\":\"admin\",\"newName\":\"\",\"password\":\"123456\",\"repassword\":\"123456\",\"email\":\"1231@11.com\",\"status\":\"10\"}', '1509963601', '2');
+INSERT INTO `yii2_admin_log` VALUES ('39', '1', 'user', 'create', '/user/create', 'id=3', '{\"id\":\"\",\"username\":\"helony\",\"newName\":\"\",\"password\":\"123456\",\"repassword\":\"123456\",\"email\":\"isuben@foxmail.com\",\"status\":\"10\"}', '1509963623', '2');
+INSERT INTO `yii2_admin_log` VALUES ('40', '1', 'authority', 'create', '/authority/create', 'name=', '{\"type\":\"2\",\"name\":\"\",\"newName\":\"user/view\",\"description\":\"用户信息查看\",\"rule_name\":\"\"}', '1509964139', '2');
 
 -- ----------------------------
 -- Table structure for yii2_arrange
@@ -171,7 +175,7 @@ CREATE TABLE `yii2_auth_item` (
 -- ----------------------------
 -- Records of yii2_auth_item
 -- ----------------------------
-INSERT INTO `yii2_auth_item` VALUES ('admin', '1', '管理员', null, null, '1501996503', '1508741814');
+INSERT INTO `yii2_auth_item` VALUES ('admin', '1', '管理员', null, null, '1501996503', '1509964710');
 INSERT INTO `yii2_auth_item` VALUES ('admin-log/delete', '2', '操作日志-删除', null, null, '1501996503', '1501996503');
 INSERT INTO `yii2_auth_item` VALUES ('admin-log/delete-all', '2', '操作日志-批量删除', null, null, '1501996503', '1501996503');
 INSERT INTO `yii2_auth_item` VALUES ('admin-log/export', '2', '操作日志-导出', null, null, '1501996503', '1501996503');
@@ -281,6 +285,7 @@ INSERT INTO `yii2_auth_item` VALUES ('user/export', '2', '用户信息-导出', 
 INSERT INTO `yii2_auth_item` VALUES ('user/index', '2', '用户信息-显示', null, null, '1501996503', '1501996503');
 INSERT INTO `yii2_auth_item` VALUES ('user/search', '2', '用户信息-搜索', null, null, '1501996503', '1501996503');
 INSERT INTO `yii2_auth_item` VALUES ('user/update', '2', '用户信息-修改', null, null, '1501996503', '1501996503');
+INSERT INTO `yii2_auth_item` VALUES ('user/view', '2', '用户信息查看', null, null, '1509964138', '1509964138');
 
 -- ----------------------------
 -- Table structure for yii2_auth_item_child
@@ -405,6 +410,7 @@ INSERT INTO `yii2_auth_item_child` VALUES ('admin', 'user/export');
 INSERT INTO `yii2_auth_item_child` VALUES ('admin', 'user/index');
 INSERT INTO `yii2_auth_item_child` VALUES ('admin', 'user/search');
 INSERT INTO `yii2_auth_item_child` VALUES ('admin', 'user/update');
+INSERT INTO `yii2_auth_item_child` VALUES ('admin', 'user/view');
 INSERT INTO `yii2_auth_item_child` VALUES ('administrator', 'admin-log/delete');
 INSERT INTO `yii2_auth_item_child` VALUES ('administrator', 'admin-log/delete-all');
 INSERT INTO `yii2_auth_item_child` VALUES ('administrator', 'admin-log/export');
@@ -512,6 +518,7 @@ INSERT INTO `yii2_auth_item_child` VALUES ('administrator', 'user/export');
 INSERT INTO `yii2_auth_item_child` VALUES ('administrator', 'user/index');
 INSERT INTO `yii2_auth_item_child` VALUES ('administrator', 'user/search');
 INSERT INTO `yii2_auth_item_child` VALUES ('administrator', 'user/update');
+INSERT INTO `yii2_auth_item_child` VALUES ('administrator', 'user/view');
 INSERT INTO `yii2_auth_item_child` VALUES ('test', 'admin-log/delete');
 INSERT INTO `yii2_auth_item_child` VALUES ('test', 'admin-log/delete-all');
 INSERT INTO `yii2_auth_item_child` VALUES ('test', 'admin-log/export');
@@ -4124,6 +4131,7 @@ INSERT INTO `yii2_china` VALUES ('991400', '第十四师', '990000');
 DROP TABLE IF EXISTS `yii2_group`;
 CREATE TABLE `yii2_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) DEFAULT NULL,
   `group_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户组名',
   `desc` text COLLATE utf8_unicode_ci COMMENT '用户组描述',
   `created_at` int(11) DEFAULT NULL COMMENT '创建时间',
@@ -4138,8 +4146,13 @@ CREATE TABLE `yii2_group` (
 -- ----------------------------
 -- Records of yii2_group
 -- ----------------------------
-INSERT INTO `yii2_group` VALUES ('7', '商户后台站长', '', '1508207654', '1508207778', '0', 'admin', '1');
-INSERT INTO `yii2_group` VALUES ('8', '服务商', '', '1508408245', '1508408245', '0', 'admin', '1');
+INSERT INTO `yii2_group` VALUES ('2', null, '测试组', '', '1508909792', '1509362695', '0', 'admin', '1');
+INSERT INTO `yii2_group` VALUES ('3', null, '技术组', '商户系统技术组', '1507534751', '1508916734', '0', 'admin', '1');
+INSERT INTO `yii2_group` VALUES ('4', null, '财务组', '财务组说明6', '1507879343', '1508827446', '0', 'admin', '1');
+INSERT INTO `yii2_group` VALUES ('5', null, '产品组', '产品组', '1508753863', '1508753863', '3', 'admin', '1');
+INSERT INTO `yii2_group` VALUES ('6', null, '商户后台管理员', '', '1508207299', '1508207299', '1', 'admin', '1');
+INSERT INTO `yii2_group` VALUES ('7', null, '商户后台站长', '', '1508207654', '1508207778', '0', 'admin', '1');
+INSERT INTO `yii2_group` VALUES ('8', null, '服务商', '', '1508408245', '1508408245', '0', 'admin', '1');
 
 -- ----------------------------
 -- Table structure for yii2_group_permission
@@ -4465,12 +4478,14 @@ CREATE TABLE `yii2_user` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `password_reset_token` (`password_reset_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of yii2_user
 -- ----------------------------
 INSERT INTO `yii2_user` VALUES ('1', 'user_id_1', 'G3Cx6JqFAzqVlspjwoTw_JBu3wfFt3LV', '$2y$13$oVtzUIDMkaeRRKN7qoR2bu/qKEmww5YGlskD6J8G.GOQs/pUUy3GO', 'RoNNqxz_0mFsGjHzPqcupHRMfgIW4APH_1508741585', 'user_1@qq.com', '10', '1508479727', '1508741584');
+INSERT INTO `yii2_user` VALUES ('2', 'admin', 'sw4p82Cj3B9s9lonmx_PlRPpgBH6FBtY', '$2y$13$HydMqqm4fuUh.v8CaD57wOhxU7M8XFbdlxYOJnj0jpX8jC06w5RN6', 'uTvJ_HlBHmm3kxYVXjd9pyuP4z-pw_Ar_1509963601', '1231@11.com', '10', '1509963600', '1509963600');
+INSERT INTO `yii2_user` VALUES ('3', 'helony', '2KNJFfZKLzsjj8F4AXk2Sw5K1TYf6hyH', '$2y$13$boeDwynHdyXLQdVQP10CPO6n.fkz4RTrD0dngJ6o9A3riMSwyHM.e', 'ki3QekG2qmmf-awBCRbsEbn8c1O6hqHW_1509963622', 'isuben@foxmail.com', '10', '1509963622', '1509963622');
 
 -- ----------------------------
 -- Table structure for yii2_user_group

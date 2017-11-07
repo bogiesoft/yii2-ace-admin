@@ -1,23 +1,23 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\widgets\DetailView;
 use common\widgets\Alert;
 
-$this->title = '用戶分配组';
+$this->title = '角色信息详情';
 
-$depends = ['depends' => 'backend\assets\AdminAsset'];
-$this->registerJsFile('@web/public/assets/js/jstree/jstree.min.js', $depends);
-$this->registerCssFile('@web/public/assets/js/jstree/default/style.css', $depends);
+$this->registerJsFile('@web/public/assets/js/jquery.nestable.min.js', [
+    'depends' => 'backend\assets\AdminAsset'
+]);
+
+/* @var $model \backend\models\Auth */
 ?>
 <?= Alert::widget() ?>
-<?php $form = ActiveForm::begin(['enableClientValidation' => true]); ?>
-    <div class="col-xs-12 col-sm-3">
+    <div class="col-xs-12 col-sm-4">
         <div class="col-xs-12 col-sm-12 widget-container-col  ui-sortable">
             <!-- #section:custom/widget-box -->
             <div class="widget-box  ui-sortable-handle">
                 <div class="widget-header">
-                    <h5 class="widget-title"><?= Yii::t('app', 'Group'); ?></h5>
+                    <h5 class="widget-title"> 角色信息 </h5>
                     <!-- #section:custom/widget-box.toolbar -->
                     <div class="widget-toolbar">
                         <a class="orange2" data-action="fullscreen" href="#">
@@ -34,30 +34,28 @@ $this->registerCssFile('@web/public/assets/js/jstree/default/style.css', $depend
                     <!-- /section:custom/widget-box.toolbar -->
                 </div>
 
-
                 <div class="widget-body">
                     <div class="widget-main">
-                        <input type="hidden" name="UserGroups[id]" value="<?= $model->username ?>"/>
                         <?php
-                        echo $form->field($model, 'username')
-                            ->textInput($model->isNewRecord ? [] : ['disabled' => 'disabled']) .
-                            $form->field($model, 'email')->textarea(['style' => 'height: 100px'])
-                            .Html::submitButton(
-                                $model->isNewRecord ? Yii::t('app', 'Save') : Yii::t('app', 'Update'),
-                                ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
-                            );
+                        echo DetailView::widget([
+                            'model' => $model,
+                            'attributes' => [
+                                'username',
+                                'email',
+                                ['label' => '添加时间', 'value' => date('Y-m-d H:i:s', $model->created_at)],
+                                ['label' => '修改时间', 'value' => date('Y-m-d H:i:s', $model->updated_at)],
+                            ],
+                        ]);
                         ?>
                     </div>
                 </div>
-
             </div>
         </div>
-
         <div class="col-xs-12 col-sm-12 widget-container-col  ui-sortable">
             <!-- #section:custom/widget-box -->
-            <div class="widget-box ui-sortable-handle">
+            <div class="widget-box  ui-sortable-handle">
                 <div class="widget-header">
-                    <h5 class="widget-title">组别</h5>
+                    <h5 class="widget-title">用户组</h5>
                     <!-- #section:custom/widget-box.toolbar -->
                     <div class="widget-toolbar">
                         <a class="orange2" data-action="fullscreen" href="#">
@@ -70,21 +68,50 @@ $this->registerCssFile('@web/public/assets/js/jstree/default/style.css', $depend
                             <i class="ace-icon fa fa-chevron-up"></i>
                         </a>
                     </div>
+
                     <!-- /section:custom/widget-box.toolbar -->
                 </div>
 
                 <div class="widget-body">
                     <div class="widget-main">
-                        <div id="tree-one" class="tree tree-selectable"></div>
+                        <div id="nestable" class="dd">
+                            <ol class="dd-list">
+                                <?php
+                                $key = 1;
+                                foreach ($groups as $value) :
+                                    $isChild = count($value['children']) > 0 ? true : false;
+                                    ?>
+
+                                    <li data-id="<?= $key ?>" class="dd-item">
+                                        <div class="dd-handle">
+                                            <?= $value['text'] ?>
+                                            <span class="sticker">
+                                        <span class="label label-success arrowed-in">
+                                            <?php if ($value['state']['selected']) { ?>
+                                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                            <?php } ?>
+                                        </span>
+                                    </span>
+                                        </div>
+                                        <?php if ($isChild) : ?>
+                                            <ol class="dd-list">
+                                                <?php foreach ($value['children'] as $val) :
+                                                    $key++;
+                                                    ?>
+                                                    <li class="dd-item item-red" data-id="<?= $key ?>">
+                                                        <div class="dd-handle"><?= $value['text'] ?></div>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ol>
+                                        <?php else: $key++; endif; ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ol>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 widget-container-col  ui-sortable">
-            <!-- #section:custom/widget-box -->
-            <div class="widget-box ui-sortable-handle">
                 <div class="widget-header">
-                    <h5 class="widget-title">平台</h5>
+                    <h5 class="widget-title">用户平台</h5>
                     <!-- #section:custom/widget-box.toolbar -->
                     <div class="widget-toolbar">
                         <a class="orange2" data-action="fullscreen" href="#">
@@ -100,7 +127,6 @@ $this->registerCssFile('@web/public/assets/js/jstree/default/style.css', $depend
 
                     <!-- /section:custom/widget-box.toolbar -->
                 </div>
-
                 <div class="widget-body">
                     <div class="widget-main">
                         <div id="nestable" class="dd">
@@ -139,13 +165,8 @@ $this->registerCssFile('@web/public/assets/js/jstree/default/style.css', $depend
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 widget-container-col  ui-sortable">
-            <!-- #section:custom/widget-box -->
-            <div class="widget-box ui-sortable-handle">
                 <div class="widget-header">
-                    <h5 class="widget-title">菜单</h5>
+                    <h5 class="widget-title">用户菜单</h5>
                     <!-- #section:custom/widget-box.toolbar -->
                     <div class="widget-toolbar">
                         <a class="orange2" data-action="fullscreen" href="#">
@@ -161,7 +182,6 @@ $this->registerCssFile('@web/public/assets/js/jstree/default/style.css', $depend
 
                     <!-- /section:custom/widget-box.toolbar -->
                 </div>
-
                 <div class="widget-body">
                     <div class="widget-main">
                         <div id="nestable" class="dd">
@@ -203,94 +223,56 @@ $this->registerCssFile('@web/public/assets/js/jstree/default/style.css', $depend
             </div>
         </div>
     </div>
+    <div class="col-xs-12 col-sm-8">
+        <div class="col-xs-12 col-sm-12 widget-container-col  ui-sortable">
+            <!-- #section:custom/widget-box -->
+            <div class="widget-box  ui-sortable-handle">
+                <div class="widget-header">
+                    <h5 class="widget-title"> 权限信息 </h5>
+                    <!-- #section:custom/widget-box.toolbar -->
+                    <div class="widget-toolbar">
+                        <a class="orange2" data-action="fullscreen" href="#">
+                            <i class="ace-icon fa fa-expand"></i>
+                        </a>
+                        <a data-action="reload" href="#">
+                            <i class="ace-icon fa fa-refresh"></i>
+                        </a>
+                        <a data-action="collapse" href="#">
+                            <i class="ace-icon fa fa-chevron-up"></i>
+                        </a>
+                    </div>
 
-    <div class="col-xs-12 col-sm-9 widget-container-col  ui-sortable">
-        <!-- #section:custom/widget-box -->
-        <div class="widget-box ui-sortable-handle">
-            <div class="widget-header">
-                <h5 class="widget-title"><?= Yii::t('app', 'Permissions'); ?></h5>
-                <!-- #section:custom/widget-box.toolbar -->
-                <div class="widget-toolbar">
-                    <a class="orange2" data-action="fullscreen" href="#">
-                        <i class="ace-icon fa fa-expand"></i>
-                    </a>
-                    <a data-action="reload" href="#">
-                        <i class="ace-icon fa fa-refresh"></i>
-                    </a>
-                    <a data-action="collapse" href="#">
-                        <i class="ace-icon fa fa-chevron-up"></i>
-                    </a>
+                    <!-- /section:custom/widget-box.toolbar -->
                 </div>
-            </div>
-            <div class="widget-body">
-                <div class="widget-main">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12">
-                            <?php foreach ($permissions as $value): ?>
-                                <div class="col-xs-12 col-sm-6">
-                                    <div class="alert alert-success" style="padding:5px; margin:3px;">
-                                        <i class="ace-icon fa fa-check bigger-110 green"></i>
-                                        <?= $value['text'] . $value['data'] ?>
+
+                <div class="widget-body">
+                    <div class="widget-main">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12">
+                                <?php foreach ($permissions as $value): ?>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="alert alert-success" style="padding:5px; margin:3px;">
+                                            <i class="ace-icon fa fa-check bigger-110 green"></i>
+                                            <?= $value['text'] . $value['data'] ?>
+                                        </div>
                                     </div>
-                                </div>
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<?php ActiveForm::end(); ?>
+
 <?php $this->beginBlock('javascript') ?>
-<script type="text/javascript">
-    $(function(){
-        $("#tree-one").jstree({
-            "plugins" : ["checkbox" ],
-            core: {
-                "animation" : 0,
-                "check_callback" : true,
-                data: <?=yii\helpers\Json::encode($trees)?>
-            }
-        }).on('changed.jstree', function(e, data){
-            var i, j, str;
-            for(i = 0, j = data.selected.length; i < j; i++) {
-                str = data.instance.get_node(data.selected[i]).data;
-                if (str) {
-                    var arr = str.split("/");
-                    $("input[value^=" + arr[0] + "]").attr('checked', true).each(function(){
-                        this.checked = true;
-                    });
-                }
-            }
-        }).on('deselect_node.jstree', function(obj, data, event) {
-            var str = data.node.data;
-            if (str) {
-                str = str.split("/");
-                $("input[value^=" + str[0] + "]").attr('checked', false).each(function(){
-                    this.checked = false;
-                })
-            }
+    <script type="text/javascript">
+        $(function () {
+            $('.dd').add('.myclass').nestable();
 
-            var i, j;
-            for(i = 0, j = data.selected.length; i < j; i++) {
-                str = data.instance.get_node(data.selected[i]).data;
-                console.info(str);
-                if (str) {
-                    var arr = str.split("/");
-                    $("input[value^=" + arr[0] + "]").attr('checked', false).each(function(){
-                        this.checked = false;
-                    });
-                }
-            }
+            $('.dd-handle a').on('mousedown', function (e) {
+                e.stopPropagation();
+            });
         });
-
-        // 全部选择
-        $('.allChecked').click(function(){
-            var isChecked = this.checked;
-            $('input[type=checkbox]').each(function(){if ($(this).attr('checked', isChecked).get(0)) $(this).get(0).checked = isChecked;});
-        });
-
-
-    });
-</script>
+    </script>
 <?php $this->endBlock(); ?>

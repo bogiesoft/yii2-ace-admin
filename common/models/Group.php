@@ -90,7 +90,6 @@ class Group extends \yii\db\ActiveRecord
         if ($intStatus !== null && isset($array[$intStatus])) {
             $array = $array[$intStatus];
         }
-
         return $array;
     }
 

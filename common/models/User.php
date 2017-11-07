@@ -249,8 +249,8 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getPlates()
     {
-        return $this->hasMany(Permission::className(),['id'=>'permission_id'])
-            ->via('groupsPermissions')
+        return $this->hasMany(Plate::className(),['id'=>'plate_id'])
+            ->via('permissions')
             ->groupBy('id');
     }
 }
